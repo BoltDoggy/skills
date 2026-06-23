@@ -4,13 +4,22 @@
 
 ## 项目概述
 
-本项目是一个 **Claude Code Skills（技能）合集插件仓库**，用于发布可被 Claude Code 及其他兼容 `SKILL.md` 约定的 AI agent（如 Kimi Code、Cursor、Codex）安装和使用的技能（Skills）。每个技能是一个自包含的目录，核心是 `SKILL.md` 文件，向 agent 注入特定领域知识、工作流或操作规范。
+本项目是一个 **Claude Code Skills（技能）合集仓库**，用于发布可被 Claude Code 及其他兼容 `SKILL.md` 约定的 AI agent（如 Kimi Code、Cursor、Codex）安装和使用的技能（Skills）。每个技能是一个自包含的目录，核心是 `SKILL.md` 文件，向 agent 注入特定领域知识、工作流或操作规范。
 
 项目本身**不包含可执行代码、构建工具或依赖管理器**——它是一个纯配置与文档型仓库。"构建"产物即为目录结构本身，由 AI agent 在运行时直接加载。
 
-### 技能间的协作关系
+### 插件划分
 
-四个技能构成一套完整的开发工作流，按阶段串联：
+本项目发布**两个独立插件**，按领域分离：
+
+| 插件 | 类别 | 包含技能 | 说明 |
+|------|------|---------|------|
+| `bolt-workflow` | workflow | spec-first、doc-first、done-check | 开发工作流：从需求澄清到完成验收的全流程规范 |
+| `bun-pnpm` | tooling | bun-pnpm | Bun 项目工具链：依赖管理用 pnpm，运行时用 bun |
+
+### 工作流技能间的协作关系
+
+`bolt-workflow` 的三个技能按阶段串联：
 
 ```
 需求输入
@@ -34,19 +43,23 @@
 ✅ 宣告完成
 ```
 
-- `bun-pnpm` 是独立的工具链规范，适用于 Bun 项目中的依赖管理场景，与上述流程正交。
+`bun-pnpm` 与上述流程正交，适用于 Bun 项目中的依赖管理场景。
 
 ## 目录结构
 
 ```
 .
 ├── .claude-plugin/
-│   ├── plugin.json          # 插件清单：名称、版本、技能路径注册
-│   └── marketplace.json     # 技能市场（marketplace）发布元数据
+│   ├── plugin.json          # 根插件清单：bolt-workflow（含 doc-first / spec-first / done-check）
+│   └── marketplace.json     # 技能市场发布元数据（注册 bolt-workflow 和 bun-pnpm 两个插件）
 ├── skills/
-│   └── <skill-name>/
-│       ├── SKILL.md         # 必需：技能定义（YAML front matter + Markdown 指令）
-│       └── references/      # 可选：参考文档（当前无技能使用）
+│   ├── <skill-name>/
+│   │   ├── SKILL.md         # 必需：技能定义（YAML front matter + Markdown 指令）
+│   │   └── references/      # 可选：参考文档
+│   └── bun-pnpm/
+│       ├── .claude-plugin/
+│       │   └── plugin.json  # bun-pnpm 独立插件清单
+│       └── SKILL.md         # 技能定义
 ├── .gitignore               # 忽略 .specs/（临时工作区）
 ├── README.md                # 人类向的项目说明
 └── AGENTS.md                # 本文件
@@ -54,28 +67,32 @@
 
 ### 当前已收录技能
 
-| 技能 | 路径 | 版本 | category | 说明 |
-|------|------|------|----------|------|
-| `doc-first` | `skills/doc-first/SKILL.md` | 1.0.0 | workflow | 文档优先原则：要求 agent 先写文档、后写代码，代码变更必须同步更新文档。定义了文档优先级、变更同步映射表、执行流程和检查清单 |
-| `spec-first` | `skills/spec-first/SKILL.md` | 1.0.0 | workflow | 需求澄清与原型确认：要求 agent 先澄清需求、确认原型方案（输出到 `.specs/`），获得用户明确认可后再编码。界面类任务必须输出自包含 HTML 原型 |
-| `bun-pnpm` | `skills/bun-pnpm/SKILL.md` | 1.0.0 | tooling | Bun 项目使用 pnpm 管理依赖：依赖管理（install/add/remove/update）用 pnpm，运行时（脚本执行、测试、服务启动）用 bun。基于 pnpm@11+，配置统一写入 `pnpm-workspace.yaml` |
-| `done-check` | `skills/done-check/SKILL.md` | 1.0.0 | workflow | 开发完成验收：要求 agent 在宣告任务完成前执行系统性验收（需求回溯、测试、构建、手动验证、diff 自审、回归排查、文档同步），按 CLI / Web / Server 区分验收方式，生成 `.reports/<task-name>/report.html` 验收报告 |
+| 技能 | 所属插件 | 路径 | 版本 | category | 说明 |
+|------|---------|------|------|----------|------|
+| `spec-first` | bolt-workflow | `skills/spec-first/SKILL.md` | 1.0.0 | workflow | 需求澄清与原型确认：要求 agent 先澄清需求、确认原型方案（输出到 `.specs/`），获得用户明确认可后再编码。界面类任务必须输出自包含 HTML 原型 |
+| `doc-first` | bolt-workflow | `skills/doc-first/SKILL.md` | 1.0.0 | workflow | 文档优先原则：要求 agent 先写文档、后写代码，代码变更必须同步更新文档。定义了文档优先级、变更同步映射表、执行流程和检查清单 |
+| `done-check` | bolt-workflow | `skills/done-check/SKILL.md` | 1.0.0 | workflow | 开发完成验收：要求 agent 在宣告任务完成前执行系统性验收（需求回溯、测试、构建、手动验证、diff 自审、回归排查、文档同步），按 CLI / Web / Server 区分验收方式，生成 `.reports/<task-name>/report.html` 验收报告 |
+| `bun-pnpm` | bun-pnpm | `skills/bun-pnpm/SKILL.md` | 1.0.0 | tooling | Bun 项目使用 pnpm 管理依赖：依赖管理（install/add/remove/update）用 pnpm，运行时（脚本执行、测试、服务启动）用 bun。基于 pnpm@11+，配置统一写入 `pnpm-workspace.yaml` |
 
 ## 关键配置文件
 
-### `.claude-plugin/plugin.json`
+### `.claude-plugin/plugin.json`（根）
 
-插件主清单文件。核心字段：
+根插件清单，定义 `bolt-workflow` 插件。核心字段：
 
-- `name`：插件名称（当前值为 `"doc-first"`）
-- `version`：插件版本（当前 `1.0.0`）
+- `name`：插件名称（`"bolt-workflow"`）
+- `version`：插件版本（`1.0.0`）
 - `description`：插件描述
 - `author`：作者信息
 - `keywords`：关键词数组（用于技能检索）
-- `category`：分类（`workflow` 或 `tooling`）
-- `skills`：**数组**，列出各技能目录的相对路径（当前为 `["./skills/doc-first", "./skills/spec-first", "./skills/bun-pnpm", "./skills/done-check"]`）
+- `category`：分类（`workflow`）
+- `skills`：**数组**，列出各技能目录的相对路径（`["./skills/doc-first", "./skills/spec-first", "./skills/done-check"]`）
 
-**添加新技能时，必须在此文件的 `skills` 数组中注册路径。**
+### `skills/bun-pnpm/.claude-plugin/plugin.json`
+
+`bun-pnpm` 是独立插件，有自己的清单。`skills` 指向 `["./"]`（SKILL.md 就在插件根目录）。
+
+**添加新技能时，根据其领域归入对应插件的 `skills` 数组，或创建新的插件目录。**
 
 ### `.claude-plugin/marketplace.json`
 
@@ -84,7 +101,7 @@
 - `name`、`description`：市场名称与描述
 - `owner`：所有者信息（name + email）
 - `metadata`：版本元数据
-- `plugins`：**数组**，每个插件条目含 `name`、`description`、`source`（所有技能当前均为 `"./"`）、`version`、`author`、`keywords`、`category`
+- `plugins`：**数组**，每个插件条目含 `name`、`description`、`source`、`version`、`author`、`keywords`、`category`。当前注册了两个插件：`bolt-workflow`（`source: "./"`）和 `bun-pnpm`（`source: "./skills/bun-pnpm"`）
 
 此文件面向 Claude Code marketplace 分发，非运行时加载逻辑。
 
@@ -105,15 +122,16 @@
 
 ## 添加新技能的流程
 
-1. 在 `skills/` 下创建新目录，目录名即技能名（kebab-case）。
-2. 创建 `SKILL.md`，包含 YAML front matter（`name`、`description`）与 Markdown 正文指令。
+1. 判断技能属于哪个领域（工作流 / 工具链 / 其他），决定归入已有插件还是新建插件。
+2. 在 `skills/` 下创建新目录，目录名即技能名（kebab-case）。
+3. 创建 `SKILL.md`，包含 YAML front matter（`name`、`description`）与 Markdown 正文指令。
    - `description` 字段应明确说明：何时激活此技能、判断准则是什么
    - 正文建议包含：原则声明、适用场景表、执行流程、常见场景示范、检查清单
-3.（可选）添加 `references/` 子目录存放参考文档。
-4. 在 `.claude-plugin/plugin.json` 的 `skills` 数组中添加该技能的相对路径。
-5. 在 `.claude-plugin/marketplace.json` 的 `plugins` 数组中添加对应条目（含 `name`、`description`、`source: "./"`、`version`、`author`、`keywords`、`category`）。
-6. 更新 `README.md` 的已收录技能表格。
-7. 更新本文件（`AGENTS.md`）的"当前已收录技能"表格。
+4.（可选）添加 `references/` 子目录存放参考文档。
+5. 在所属插件的 `plugin.json` 的 `skills` 数组中添加该技能的相对路径。
+6. 在 `.claude-plugin/marketplace.json` 的 `plugins` 数组中确认对应插件条目信息正确。
+7. 更新 `README.md` 的技能表格。
+8. 更新本文件（`AGENTS.md`）的"当前已收录技能"表格。
 
 ## 构建与测试
 

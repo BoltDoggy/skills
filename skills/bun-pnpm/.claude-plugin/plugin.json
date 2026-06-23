@@ -1,0 +1,20 @@
+{
+  "name": "bun-pnpm",
+  "description": "Bun 项目使用 pnpm 管理依赖：依赖管理（install/add/remove/update）一律使用 pnpm，运行时（脚本执行、测试、服务启动）继续使用 bun。基于 pnpm@11+。",
+  "version": "1.0.0",
+  "author": {
+    "name": "bolt",
+    "email": "github@robolt.uu.me"
+  },
+  "keywords": [
+    "bun",
+    "bunjs",
+    "pnpm",
+    "dependency-management",
+    "package-manager",
+    "best-practices",
+    "agent-guidelines"
+  ],
+  "category": "tooling",
+  "skills": ["./"]
+}
