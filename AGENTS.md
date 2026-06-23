@@ -101,7 +101,8 @@
 - `name`、`description`：市场名称与描述
 - `owner`：所有者信息（name + email）
 - `metadata`：版本元数据
-- `plugins`：**数组**，每个插件条目含 `name`、`description`、`source`、`version`、`author`、`keywords`、`category`。当前注册了两个插件：`bolt-workflow`（`source: "./"`）和 `bun-pnpm`（`source: "./skills/bun-pnpm"`）
+- `plugins`：**数组**，每个插件条目含 `name`、`description`、`source`、`version`、`author`、`keywords`、`category`、`skills`。当前注册了两个插件：`bolt-workflow`（`source: "./"`，`skills` 相对仓库根目录）和 `bun-pnpm`（`source: "./skills/bun-pnpm"`，`skills: ["./"]` 相对该插件目录）
+- `skills`：在 `marketplace.json` 的每个插件条目中，路径相对于该插件的 `source` 目录；例如 `source: "./skills/bun-pnpm"` 时，插件根目录下的 `SKILL.md` 应写作 `skills: ["./"]`，否则 `npx skills add` 会发现技能但无法归入对应分组
 
 此文件面向 Claude Code marketplace 分发，非运行时加载逻辑。
 

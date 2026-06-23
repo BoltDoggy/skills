@@ -27,20 +27,36 @@ Claude Code 技能合集。
 ### Claude Code
 
 ```bash
-# 安装全部（工作流 + 工具链）
-claude plugin install git@github.com:BoltDoggy/skills.git
+# 1. 添加商店（只需一次）
+/plugin marketplace add BoltDoggy/skills
 
-# 仅安装 bun-pnpm
-claude plugin install git@github.com:BoltDoggy/skills.git#skills/bun-pnpm
+# 2. 安装插件
+/plugin install bolt-workflow@bolt-skills   # 开发工作流
+/plugin install bun-pnpm@bolt-skills        # Bun 工具链
+```
+
+也可直接从 Git 安装（不经过商店）：
+
+```bash
+/plugin install https://github.com/BoltDoggy/skills.git
 ```
 
 ### 其他 Agent（Kimi Code / Cursor / Codex 等）
 
 ```bash
-npx skills add BoltDoggy/skills
+# 安装全部 skills
+npx skills add BoltDoggy/skills --all
+
+# 安装指定 skill
+npx skills add BoltDoggy/skills --skill spec-first --skill doc-first --skill done-check
+npx skills add BoltDoggy/skills --skill bun-pnpm
+
+# 查看可用的 skills
+npx skills add BoltDoggy/skills --list
 ```
 
-支持所有兼容 `SKILL.md` 约定的 AI agent。
+`npx skills add` 在交互式选择时按 `marketplace.json` 中的插件分组展示，安装时按 skill 粒度选择。
+`marketplace.json` 中每个插件的 `skills` 路径相对于该插件的 `source` 目录；例如 `bun-pnpm` 的 `source` 是 `./skills/bun-pnpm`，所以对应 `skills` 写 `["./"]`。
 
 ## 添加新技能
 
@@ -53,7 +69,7 @@ skills/
     └── references/        # 可选：参考文档
 ```
 
-然后在 `.claude-plugin/plugin.json` 的 `skills` 数组中添加路径。
+然后在所属插件的 `plugin.json` 和根目录 `.claude-plugin/marketplace.json` 中添加对应路径。注意 marketplace 中的 `skills` 路径相对于该插件的 `source` 目录。
 
 ## 许可证
 
