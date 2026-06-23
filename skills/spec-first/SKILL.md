@@ -356,14 +356,47 @@ POST /api/exports
 
 ## 10. 与 doc-first 配合
 
-本 skill 与 `doc-first` 配合使用：
+本 skill 与 `doc-first` 配合使用。两者产出物的定位不同：
 
-1. **spec-first**（本 skill）：澄清需求 → 确认原型 → 获得认可
-2. **doc-first**：将确认的方案写入文档 → 基于文档编码
+| | `.specs/`（spec-first） | `docs/`（doc-first） |
+|---|---|---|
+| **阶段** | 澄清中，方案未定稿 | 已确认，正式归档 |
+| **内容** | 草稿、待确认项、HTML 原型 | 架构文档、ADR、API 契约、用户指南 |
+| **版本控制** | ❌ 不提交（临时工作区） | ✅ 提交（项目交付物） |
+
+### 完整流程
 
 ```
-需求输入 → [spec-first] 澄清+原型确认 → [doc-first] 写文档 → 编码 → 更新文档
+需求输入
+  │
+  ▼
+[spec-first] 在 .specs/<name>/ 下澄清需求、输出原型
+  │           （spec.md 草稿 + prototype.html，不提交）
+  │
+  ▼  ← 用户确认方案
+  │
+[doc-first] 将确认的方案沉淀到 docs/ 正式文档
+  │           spec.md 中的关键决策 → docs/adr/ 或 docs/architecture/
+  │           数据模型/接口       → docs/api/
+  │           用户侧说明           → docs/guide/
+  │           （提交到 Git）
+  │
+  ▼
+编码实现 → 更新文档
 ```
+
+### 确认后的迁移动作
+
+用户确认方案后，不要直接开始编码——先将 `.specs/<name>/spec.md` 中的内容迁移到 `docs/` 对应位置：
+
+| spec.md 中的内容 | 迁移目标 |
+|---|---|
+| 关键决策及理由 | `docs/adr/NNN-title.md`（如涉及架构决策） |
+| 功能定位与模块职责 | `docs/architecture/overview.md` |
+| 数据模型与接口契约 | `docs/api/` |
+| 用户侧使用说明 | `docs/guide/` 或 `docs/COMMANDS.md` |
+
+迁移完成后，`.specs/<name>/` 可保留作参考或删除，不影响项目。
 
 ## 11. 检查清单
 
