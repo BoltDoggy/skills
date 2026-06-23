@@ -14,5 +14,5 @@
     "agent-guidelines"
   ],
   "category": "workflow",
-  "skills": ["./skills/doc-first", "./skills/spec-first"]
+  "skills": ["./skills/doc-first", "./skills/spec-first", "./skills/bun-pnpm"]
 }

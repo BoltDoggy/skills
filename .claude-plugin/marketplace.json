@@ -48,6 +48,27 @@
         "agent-guidelines"
       ],
       "category": "workflow"
+    },
+    {
+      "name": "bun-pnpm",
+      "description": "Bun 项目使用 pnpm 管理依赖：依赖管理（install/add/remove）一律使用 pnpm，运行时（脚本执行、测试、服务启动）继续使用 bun。",
+      "source": "./",
+      "version": "1.0.0",
+      "author": {
+        "name": "bolt",
+        "email": "x.bolt@robolt.uu.me"
+      },
+      "keywords": [
+        "bun",
+        "bunjs",
+        "pnpm",
+        "dependency-management",
+        "package-manager",
+        "workflow",
+        "best-practices",
+        "agent-guidelines"
+      ],
+      "category": "tooling"
     }
   ]
 }
