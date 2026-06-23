@@ -1,13 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "doc-first-skills",
-  "description": "文档优先原则相关 Claude Code 技能",
+  "name": "bolt-skills",
+  "description": "开发工作流技能合集：需求澄清 → 文档优先 → 依赖管理 → 完成验收",
   "owner": {
     "name": "bolt",
     "email": "github@robolt.uu.me"
   },
   "metadata": {
-    "description": "文档优先原则 Claude Code 技能",
+    "description": "涵盖 spec-first、doc-first、bun-pnpm、done-check 的开发工作流技能合集",
     "version": "1.0.0"
   },
   "plugins": [
