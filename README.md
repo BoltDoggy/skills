@@ -9,6 +9,7 @@ Claude Code 技能合集插件。
 | [doc-first](skills/doc-first/) | 文档优先原则：要求 agent 先写文档、后写代码，代码变更必须同步更新文档 |
 | [spec-first](skills/spec-first/) | 需求澄清与原型确认：要求 agent 先澄清需求、确认原型方案，获得用户认可后再编码 |
 | [bun-pnpm](skills/bun-pnpm/) | Bun 项目使用 pnpm 管理依赖：依赖管理用 pnpm，运行时用 bun |
+| [done-check](skills/done-check/) | 开发完成验收：要求 agent 在宣告完成前执行系统性验收（需求回溯、测试、手动验证、diff 自审、回归排查、文档同步），按 CLI / Web / Server 区分验收方式 |
 
 ## 安装
 

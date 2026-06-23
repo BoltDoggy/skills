@@ -69,6 +69,27 @@
         "agent-guidelines"
       ],
       "category": "tooling"
+    },
+    {
+      "name": "done-check",
+      "description": "开发完成验收：要求 agent 在宣告任务完成前执行系统性验收（需求回溯、测试、构建、手动验证、diff 自审、回归排查、文档同步），按 CLI / Web / Server 项目类型区分验收方式，确保变更真正完成。",
+      "source": "./",
+      "version": "1.0.0",
+      "author": {
+        "name": "bolt",
+        "email": "x.bolt@robolt.uu.me"
+      },
+      "keywords": [
+        "acceptance",
+        "verification",
+        "testing",
+        "qa",
+        "definition-of-done",
+        "workflow",
+        "best-practices",
+        "agent-guidelines"
+      ],
+      "category": "workflow"
     }
   ]
 }

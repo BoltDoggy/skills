@@ -30,6 +30,7 @@
 | `doc-first` | `skills/doc-first/SKILL.md` | 文档优先原则：要求 agent 先写文档、后写代码，代码变更必须同步更新文档 |
 | `spec-first` | `skills/spec-first/SKILL.md` | 需求澄清与原型确认：要求 agent 先澄清需求、确认原型方案，获得用户认可后再编码 |
 | `bun-pnpm` | `skills/bun-pnpm/SKILL.md` | Bun 项目使用 pnpm 管理依赖：依赖管理（install/add/remove）用 pnpm，运行时（脚本执行、测试、服务启动）用 bun |
+| `done-check` | `skills/done-check/SKILL.md` | 开发完成验收：要求 agent 在宣告任务完成前执行系统性验收（需求回溯、测试、手动验证、diff 自审、回归排查、文档同步），按 CLI / Web / Server 区分验收方式 |
 
 
 
