@@ -1,0 +1,18 @@
+{
+  "name": "doc-first",
+  "description": "文档优先原则 Claude Code 技能：要求 agent 先写文档、后写代码，代码变更必须同步更新文档。",
+  "version": "1.0.0",
+  "author": {
+    "name": "bolt",
+    "email": "github@robolt.uu.me"
+  },
+  "keywords": [
+    "documentation",
+    "docs-first",
+    "workflow",
+    "best-practices",
+    "agent-guidelines"
+  ],
+  "category": "workflow",
+  "skills": ["./skills/doc-first"]
+}
