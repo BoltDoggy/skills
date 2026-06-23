@@ -28,6 +28,26 @@
         "agent-guidelines"
       ],
       "category": "workflow"
+    },
+    {
+      "name": "spec-first",
+      "description": "需求澄清与原型确认：要求 agent 先澄清需求、确认原型/方案，获得用户明确认可后再进入编码。",
+      "source": "./",
+      "version": "1.0.0",
+      "author": {
+        "name": "bolt",
+        "email": "x.bolt@robolt.uu.me"
+      },
+      "keywords": [
+        "requirements",
+        "clarification",
+        "prototype",
+        "spec",
+        "workflow",
+        "best-practices",
+        "agent-guidelines"
+      ],
+      "category": "workflow"
     }
   ]
 }

@@ -28,6 +28,7 @@
 | 技能 | 路径 | 说明 |
 |------|------|------|
 | `doc-first` | `skills/doc-first/SKILL.md` | 文档优先原则：要求 agent 先写文档、后写代码，代码变更必须同步更新文档 |
+| `spec-first` | `skills/spec-first/SKILL.md` | 需求澄清与原型确认：要求 agent 先澄清需求、确认原型方案，获得用户认可后再编码 |
 
 
 
