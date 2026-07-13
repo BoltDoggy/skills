@@ -48,7 +48,7 @@ description: |
 │ pnpm runtime set    │ 服务启动：bun run dev / bun run start│
 │ pnpm lockfile 操作  │                                    │
 ├─────────────────────┴────────────────────────────────────┤
-│   类型检查（typescript@rc）                                │
+│   类型检查（typescript@latest）                            │
 ├──────────────────────────────────────────────────────────┤
 │ tsc --noEmit  （bun 不做类型检查，需独立运行 tsc）          │
 └──────────────────────────────────────────────────────────┘
@@ -193,13 +193,13 @@ pnpm runtime set bun 1.3.14
 
 # 4. 安装依赖（自动下载 bun 到 node_modules/.bin/）
 pnpm add hono
-pnpm add -D typescript@rc @types/bun
+pnpm add -D typescript@latest @types/bun
 pnpm install
 
 # 5. 验证
 pnpm exec bun --version    # 1.3.14
 pnpm --version             # 11.x
-pnpm exec tsc --version    # 7.x (rc)
+pnpm exec tsc --version    # latest
 ```
 
 > **也可以**：直接在 `package.json` 中手写 `devEngines.runtime`（见 §4.4），`pnpm install` 时自动下载。`pnpm runtime set` 命令的作用就是帮你自动写入这个字段并锁定到 lockfile。
@@ -359,7 +359,7 @@ pnpm add hono
 pnpm add @hono/zod-validator
 
 # 开发依赖
-pnpm add -D typescript@rc @types/bun
+pnpm add -D typescript@latest @types/bun
 pnpm add -D vitest
 ```
 
@@ -441,8 +441,8 @@ Bun 原生支持直接运行 `.ts`/`.tsx` 文件——它在运行时**转译** 
 因此，项目必须**独立运行 `tsc --noEmit`** 进行类型检查：
 
 ```bash
-# 安装 typescript（使用 rc 版本，紧跟最新语言特性）
-pnpm add -D typescript@rc
+# 安装 typescript（使用 latest 版本，紧跟最新语言特性）
+pnpm add -D typescript@latest
 
 # 运行类型检查
 bunx tsc --noEmit
@@ -480,7 +480,7 @@ bun run typecheck   # "typecheck": "bunx tsc --noEmit"
 }
 ```
 
-> **为什么用 `typescript@rc` 而非 stable**：rc 版本当前对应 TypeScript 7，紧跟最新语言特性，适合追求最新工具链的 Bun 项目。如果 rc 版本不稳定，可随时回退到 stable：`pnpm add -D typescript`。
+> **为什么用 `typescript@latest` 而非 stable**：latest 版本紧跟最新语言特性，适合追求最新工具链的 Bun 项目。如果需要固定版本以获得更可预测的构建，可改为：`pnpm add -D typescript@~5.8.0`。
 
 **在 CI 中集成类型检查**：
 
@@ -649,7 +649,7 @@ patchedDependencies:
 - [ ] `.npmrc` 仅包含 auth/registry 配置（如需要）
 - [ ] `allowBuilds` 已声明需要构建脚本的依赖
 - [ ] `overrides` / `patchedDependencies` 已从 `package.json` 迁移到 `pnpm-workspace.yaml`
-- [ ] `typescript@rc` 已作为 devDependency 安装，`typecheck` 脚本配置为 `bunx tsc --noEmit`
+- [ ] `typescript@latest` 已作为 devDependency 安装，`typecheck` 脚本配置为 `bunx tsc --noEmit`
 - [ ] CI / Docker 中通过 `pnpm install` 自动获取项目锁定的 bun 版本，无需单独安装
 - [ ] 新增依赖后，代码能正常 import（无幽灵依赖问题）
 - [ ] Monorepo 场景下使用 `pnpm -F` 而非 `cd <dir> && pnpm add`
